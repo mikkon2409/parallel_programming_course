@@ -12,10 +12,14 @@ struct Point {
     double x;
     double y;
     Point () {
-        x0 = 0;
-        y0 = 0;
         x = 0;
         y = 0;
+    }
+    Point operator=(const Point &r)
+    {
+        x = r.x;
+        y = r.y;
+        return *this;
     }
     friend bool operator < (Point a, Point c){
         return (x0 - a.x) * (c.y - y0) - (y0 - a.y) * (c.x - x0) > 0;
@@ -86,7 +90,7 @@ Stack graham(const std::vector<Point> &a) {
     s.push(p[0]);
     s.push(p[1]);
     for (size_t i = 2; i < p.size(); i++) {
-        while (rotate(s[s.size - 2], s[s.size - 1], p[i]) < 0) {
+        while (s.size > 0 && rotate(s[s.size - 2], s[s.size - 1], p[i]) < 0) {
             s.pop();
         }
         s.push(p[i]);
